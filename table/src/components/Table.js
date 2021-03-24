@@ -2,46 +2,10 @@ import React, { useState, useEffect } from "react";
 import { CaretDown } from "react-bootstrap-icons";
 import { CaretUp } from "react-bootstrap-icons";
 import { someData } from "../data";
+import useFieldSorting from "../custom hooks/useFieldSorting";
 
 function Table() {
-  const [givenData, setGivenData] = useState(someData);
-  const [sotrBy, setSortBy] = useState(null);
-
-  const handleSort = (field) => {
-    let direction;
-    if (sotrBy && sotrBy.direction === "asc" && sotrBy.field === field) {
-      direction = "desc";
-    } else if (
-      sotrBy &&
-      sotrBy.direction === "desc" &&
-      sotrBy.field === field
-    ) {
-      direction = "asc";
-    } else {
-      direction = "asc";
-    }
-
-    setSortBy({
-      direction,
-      field,
-    });
-  };
-
-  useEffect(() => {
-    const sortFn = (a, b) => {
-      if (sotrBy?.direction === "asc") {
-        return a[sotrBy?.field] < b[sotrBy?.field] ? 1 : -1;
-      }
-      if (sotrBy?.direction === "desc") {
-        return a[sotrBy?.field] > b[sotrBy?.field] ? 1 : -1;
-      }
-    };
-
-    let newList = givenData.sort(sortFn);
-
-    console.log(newList);
-    setGivenData([...newList]);
-  }, [sotrBy]);
+  const [givenData, handleSort, sotrBy] = useFieldSorting(someData);
 
   const IconMarkup = (field) => {
     if (!sotrBy) return;
@@ -58,7 +22,6 @@ function Table() {
       <thead>
         <tr scope="row">
           {Object.keys(givenData[0]).map((field) => {
-            console.log(field);
             return (
               <th
                 className="table__th"
