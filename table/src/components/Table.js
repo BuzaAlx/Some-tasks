@@ -57,21 +57,18 @@ function Table() {
     <table className="table">
       <thead>
         <tr scope="row">
-          <th scope="col" onClick={() => handleSort("id")}>
-            id {IconMarkup("id")}
-          </th>
-          <th scope="col" onClick={() => handleSort("firstName")}>
-            firstName {IconMarkup("firstName")}
-          </th>
-          <th scope="col" onClick={() => handleSort("lastName")}>
-            lastName {IconMarkup("lastName")}
-          </th>
-          <th scope="col" onClick={() => handleSort("email")}>
-            email {IconMarkup("email")}
-          </th>
-          <th scope="col" onClick={() => handleSort("phone")}>
-            phone {IconMarkup("phone")}
-          </th>
+          {Object.keys(givenData[0]).map((field) => {
+            console.log(field);
+            return (
+              <th
+                className="table__th"
+                scope="col"
+                onClick={() => handleSort(field)}
+              >
+                {field} <span>{IconMarkup(field)}</span>
+              </th>
+            );
+          })}
         </tr>
       </thead>
       <tbody>

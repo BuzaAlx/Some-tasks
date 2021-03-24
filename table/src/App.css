@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.table__th {
+  position: relative;
+}
+
+.table__th span {
+  position: absolute;
+  top: 50%;
+  transform: translate(5px, -50%);
+}
