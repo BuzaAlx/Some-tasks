@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { someData } from "../data";
 
-function useFieldSorting(data) {
-  const [givenData, setGivenData] = useState(data);
+function useFieldSorting(url) {
+  const [givenData, setGivenData] = useState([]);
   const [sotrBy, setSortBy] = useState(null);
 
   const handleSort = (field) => {
@@ -38,6 +39,12 @@ function useFieldSorting(data) {
 
     setGivenData([...newList]);
   }, [sotrBy]);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => setGivenData(data));
+  }, []);
 
   return [givenData, handleSort, sotrBy];
 }
