@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 import { CaretDown } from "react-bootstrap-icons";
 import { CaretUp } from "react-bootstrap-icons";
 import useFieldSorting from "../custom hooks/useFieldSorting";
-import usePaginatedData from "../custom hooks/usePaginatedData";
+import usePagination from "../custom hooks/usePagination";
+import InputField from "./Input";
 
 const url =
   "http://www.filltext.com/?rows=32&id={...​|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
 
 function Table() {
-  const [givenData, handleSort, sotrBy] = useFieldSorting(url);
+  const [data, setData] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
+  const [givenData, handleSort, sotrBy] = useFieldSorting(data);
+  const [paginatedDataMarkUp, PaginationComponent] = usePagination(givenData);
 
-  const [
-    paginatedDataMarkUp,
-    setCurrentPage,
-    paginationArray,
-  ] = usePaginatedData(givenData);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
 
   const IconMarkup = (field) => {
     if (!sotrBy) return;
@@ -26,8 +30,24 @@ function Table() {
     } else return;
   };
 
+  const handleSubmit = (e) => {
+    if (filterValue === "") return;
+    e.preventDefault();
+
+    setData((data) => {
+      return data.filter((el) => {
+        return el.firstName.toUpperCase().startsWith(filterValue.toUpperCase());
+      });
+    });
+  };
+
   return (
     <>
+      <InputField
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+        handleSubmit={handleSubmit}
+      />
       <table className="table">
         <thead>
           <tr scope="row">
@@ -82,36 +102,9 @@ function Table() {
           })}
         </tbody>
       </table>
-      <div className="pagination">
-        {paginationArray.map((_, i) => {
-          return (
-            <div
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className="pagination_page"
-            >
-              {i + 1}
-            </div>
-          );
-        })}
-      </div>
+      <PaginationComponent />
     </>
   );
 }
 
 export default Table;
-
-{
-  /* {Object.keys(givenData[0]).map((field, i) => {
-            return (
-              <th
-                key={i}
-                className="table__th"
-                scope="col"
-                onClick={() => handleSort(field)}
-              >
-                {field} <span>{IconMarkup(field)}</span>
-              </th>
-            );
-          })} */
-}

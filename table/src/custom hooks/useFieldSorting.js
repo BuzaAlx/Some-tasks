@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { someData } from "../data";
 
-function useFieldSorting(url) {
+function useFieldSorting(data) {
   const [givenData, setGivenData] = useState([]);
   const [sotrBy, setSortBy] = useState(null);
+
+  useEffect(() => {
+    setGivenData(data);
+  }, [data]);
 
   const handleSort = (field) => {
     let direction;
@@ -39,12 +43,6 @@ function useFieldSorting(url) {
 
     setGivenData([...newList]);
   }, [sotrBy]);
-
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setGivenData(data));
-  }, []);
 
   return [givenData, handleSort, sotrBy];
 }
