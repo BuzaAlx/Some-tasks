@@ -67,7 +67,7 @@ function usePagination(givenData) {
     );
   };
 
-  return [paginatedDataMarkUp, PaginationComponent];
+  return [paginatedDataMarkUp, PaginationComponent, setCurrentPage];
 }
 
 export default usePagination;

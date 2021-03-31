@@ -3,6 +3,7 @@ import { CaretDown } from "react-bootstrap-icons";
 import { CaretUp } from "react-bootstrap-icons";
 import useFieldSorting from "../custom hooks/useFieldSorting";
 import usePagination from "../custom hooks/usePagination";
+import useFetch from "../custom hooks/useFetch";
 import InputField from "./Input";
 
 const url =
@@ -10,15 +11,18 @@ const url =
 
 function Table() {
   const [data, setData] = useState([]);
+  const [dataFromUrl, setDataFromUrl] = useFetch(url);
   const [filterValue, setFilterValue] = useState("");
   const [givenData, handleSort, sotrBy] = useFieldSorting(data);
-  const [paginatedDataMarkUp, PaginationComponent] = usePagination(givenData);
+  const [
+    paginatedDataMarkUp,
+    PaginationComponent,
+    setCurrentPage,
+  ] = usePagination(givenData);
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setData(data));
-  }, []);
+    setData(dataFromUrl);
+  }, [dataFromUrl]);
 
   const IconMarkup = (field) => {
     if (!sotrBy) return;
@@ -33,13 +37,22 @@ function Table() {
   const handleSubmit = (e) => {
     if (filterValue === "") return;
     e.preventDefault();
-
+    setCurrentPage(1);
+    setData(dataFromUrl);
     setData((data) => {
       return data.filter((el) => {
         return el.firstName.toUpperCase().startsWith(filterValue.toUpperCase());
       });
     });
   };
+
+  const tableHeaderMarkup = [
+    { id: "1", field: "id" },
+    { id: "2", field: "firstName" },
+    { id: "3", field: "lastName" },
+    { id: "4", field: "email" },
+    { id: "4", field: "phone" },
+  ];
 
   return (
     <>
@@ -51,41 +64,18 @@ function Table() {
       <table className="table">
         <thead>
           <tr scope="row">
-            <th
-              className="table__th"
-              scope="col"
-              onClick={() => handleSort("id")}
-            >
-              id <span>{IconMarkup("id")}</span>
-            </th>
-            <th
-              className="table__th"
-              scope="col"
-              onClick={() => handleSort("firstName")}
-            >
-              firstName <span>{IconMarkup("firstName")}</span>
-            </th>
-            <th
-              className="table__th"
-              scope="col"
-              onClick={() => handleSort("lastName")}
-            >
-              lastName <span>{IconMarkup("lastName")}</span>
-            </th>
-            <th
-              className="table__th"
-              scope="col"
-              onClick={() => handleSort("email")}
-            >
-              email <span>{IconMarkup("email")}</span>
-            </th>
-            <th
-              className="table__th"
-              scope="col"
-              onClick={() => handleSort("phone")}
-            >
-              phone <span>{IconMarkup("phone")}</span>
-            </th>
+            {tableHeaderMarkup.map(({ field, id }) => {
+              return (
+                <th
+                  key={id}
+                  className="table__th"
+                  scope="col"
+                  onClick={() => handleSort(field)}
+                >
+                  {field} <span>{IconMarkup(field)}</span>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
