@@ -62,7 +62,10 @@ const DataTable = () => {
   return (
     <>
       <div className="row w-100">
-        <div className="col mb-3 col-12 text-center">
+        <h3 className="mt-2" style={{ textAlign: "center" }}>
+          Data table with Sorting Filter Pagination
+        </h3>
+        <div className="col mb-3 col-12 text-center mt-3">
           <div className="row">
             <div className="col-md-6">
               <Pagination

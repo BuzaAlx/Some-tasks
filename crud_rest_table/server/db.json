@@ -25,9 +25,14 @@
   ],
   "users": [
     {
-      "firstName": "asdsad",
-      "lastName": "asd",
+      "firstName": "Alexey",
+      "lastName": "Lorem",
       "id": 1
+    },
+    {
+      "firstName": "Dmitry",
+      "lastName": "Lorem",
+      "id": 2
     }
   ]
 }

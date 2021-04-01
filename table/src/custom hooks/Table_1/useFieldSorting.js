@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { someData } from "../data";
 
 function useFieldSorting(data) {
   const [givenData, setGivenData] = useState([]);
   const [sotrBy, setSortBy] = useState(null);
 
   useEffect(() => {
-    setGivenData(data);
+    let dataCopy = [...data];
+    setGivenData(dataCopy);
   }, [data]);
 
   const handleSort = (field) => {

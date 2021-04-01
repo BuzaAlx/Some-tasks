@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { CaretDown } from "react-bootstrap-icons";
 import { CaretUp } from "react-bootstrap-icons";
-import useFieldSorting from "../custom hooks/useFieldSorting";
-import usePagination from "../custom hooks/usePagination";
-import useFetch from "../custom hooks/useFetch";
+import useFieldSorting from "../../custom hooks/Table_1/useFieldSorting";
+import usePagination from "../../custom hooks/Table_1/usePagination";
+import useFetch from "../../custom hooks/Table_1/useFetch";
 import InputField from "./Input";
 
 const url =
@@ -35,7 +35,7 @@ function Table() {
   };
 
   const handleSubmit = (e) => {
-    if (filterValue === "") return;
+    // if (filterValue === "") return;
     e.preventDefault();
     setCurrentPage(1);
     setData(dataFromUrl);

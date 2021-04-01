@@ -11,11 +11,7 @@ function InputField({ filterValue, setFilterValue, handleSubmit }) {
           placeholder="filter"
           onChange={(e) => setFilterValue(e.target.value)}
         />
-        <button
-          disabled={filterValue === ""}
-          type="submit"
-          className="btn btn-primary "
-        >
+        <button type="submit" className="btn btn-primary ">
           Search
         </button>
       </form>
