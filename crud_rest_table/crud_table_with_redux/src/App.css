@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+.row__input {
+  text-align: center;
+  min-height: 30px;
+}
+
+td {
+  vertical-align: inherit !important;
+}
+
+.row__action-col {
+  display: flex;
+  justify-content: center;
+}

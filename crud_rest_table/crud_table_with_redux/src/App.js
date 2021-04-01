@@ -1,10 +1,10 @@
 import "./App.css";
 import Table from "./pages/Table";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>My table</h1>
       <Table />
     </div>
   );

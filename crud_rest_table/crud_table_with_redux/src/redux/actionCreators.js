@@ -24,3 +24,8 @@ export const errorAction = (text) => ({
   type: crudTypes.SET_ERROR,
   payload: text,
 });
+
+export const loadingAction = (payload) => ({
+  type: crudTypes.SET_LOADING,
+  payload: payload,
+});

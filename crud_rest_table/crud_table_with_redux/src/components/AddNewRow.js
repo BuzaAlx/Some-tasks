@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { createUserThunk } from "../redux/reducer";
 import { useDispatch } from "react-redux";
+import { FormControl, Button } from "react-bootstrap/";
+import { PersonPlus } from "react-bootstrap-icons";
 
 function AddNewRow() {
   const [userData, setUserData] = useState({ firstName: "", lastName: "" });
@@ -19,7 +21,7 @@ function AddNewRow() {
     <tr>
       <td>#</td>
       <td>
-        <input
+        <FormControl
           className="row__input"
           type="text"
           value={userData.firstName}
@@ -29,7 +31,7 @@ function AddNewRow() {
         />
       </td>
       <td>
-        <input
+        <FormControl
           className="row__input"
           type="text"
           value={userData.lastName}
@@ -39,12 +41,14 @@ function AddNewRow() {
         />
       </td>
       <td>
-        <button
+        <Button
+          variant="primary"
+          size="sm"
           disabled={!userData.firstName || !userData.lastName}
           onClick={handleClick}
         >
-          Add new user
-        </button>
+          <PersonPlus />
+        </Button>
       </td>
     </tr>
   );

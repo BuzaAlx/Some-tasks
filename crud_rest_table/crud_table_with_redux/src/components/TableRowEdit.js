@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-
-import ToogleButton from "../ToogleButton";
+import ToogleButton from "./ToogleButton";
 import { useDispatch } from "react-redux";
-import { updateUserThunk } from "../../redux/reducer";
+import { updateUserThunk } from "../redux/reducer";
+import { FormControl, Button } from "react-bootstrap/";
+import { Save } from "react-bootstrap-icons";
 
-const UserEditingRowMarkUp = ({
-  firstName,
-  lastName,
-  id,
-  setIsEditing,
-  isEditing,
-}) => {
+const TableRowEdit = ({ firstName, lastName, id, setIsEditing, isEditing }) => {
   const [userData, setUserData] = useState({
     firstName,
     lastName,
@@ -35,10 +30,10 @@ const UserEditingRowMarkUp = ({
   }, [isEditing]);
 
   return (
-    <tr className="row" key={id}>
+    <tr key={id}>
       <td>{id}</td>
       <td>
-        <input
+        <FormControl
           className="row__input"
           name="update_input"
           type="text"
@@ -50,7 +45,7 @@ const UserEditingRowMarkUp = ({
         />
       </td>
       <td>
-        <input
+        <FormControl
           className="row__input"
           name="update_input"
           type="text"
@@ -62,7 +57,14 @@ const UserEditingRowMarkUp = ({
       </td>
       <td>
         {isEditing && (
-          <button onClick={() => handleClick(id)}>to server</button>
+          <Button
+            variant="success"
+            className="mr-1"
+            size="sm"
+            onClick={() => handleClick(id)}
+          >
+            <Save />
+          </Button>
         )}
         <ToogleButton isEditing={isEditing} setIsEditing={setIsEditing} />
       </td>
@@ -70,4 +72,4 @@ const UserEditingRowMarkUp = ({
   );
 };
 
-export default UserEditingRowMarkUp;
+export default TableRowEdit;

@@ -5,17 +5,24 @@ import {
   addUserAction,
   deleteUserAction,
   errorAction,
+  loadingAction,
 } from "./actionCreators";
 import { getUsers, createNewUser, updateUser, deleteUser } from "../api/index";
 
 const INITIAL_STATE = {
   users: [],
   error: null,
+  isLoading: false,
 };
 
 export const crudReducer = (state = INITIAL_STATE, action) => {
   let usersCopy;
   switch (action.type) {
+    case crudTypes.SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     case crudTypes.SET_USERS:
       return {
         ...state,
@@ -56,23 +63,37 @@ export const crudReducer = (state = INITIAL_STATE, action) => {
 };
 
 export const getUsersThunk = () => async (dispatch) => {
-  let data = await getUsers();
-  if (data) {
-    dispatch(setUsersAction(data));
+  try {
+    dispatch(loadingAction(true));
+    let data = await getUsers();
+    if (data) {
+      dispatch(setUsersAction(data));
+    }
+    dispatch(loadingAction(false));
+  } catch (error) {
+    dispatch(errorAction("something goes wrong", error));
   }
 };
 
 export const updateUserThunk = (id, userData) => async (dispatch) => {
-  let data = await updateUser(id, userData);
-  if (data) {
-    dispatch(updateUserAction(data));
+  try {
+    let data = await updateUser(id, userData);
+    if (data) {
+      dispatch(updateUserAction(data));
+    }
+  } catch (error) {
+    dispatch(errorAction("something goes wrong", error));
   }
 };
 
 export const createUserThunk = (userData) => async (dispatch) => {
-  let data = await createNewUser(userData);
-  if (data) {
-    dispatch(addUserAction(data));
+  try {
+    let data = await createNewUser(userData);
+    if (data) {
+      dispatch(addUserAction(data));
+    }
+  } catch (error) {
+    dispatch(errorAction("something goes wrong", error));
   }
 };
 
@@ -81,7 +102,6 @@ export const deleteUserThunk = (id) => async (dispatch) => {
     await deleteUser(id);
     dispatch(deleteUserAction(id));
   } catch (error) {
-    console.log(error);
-    // dispatch(errorAction("something goes wrong"));
+    dispatch(errorAction("something goes wrong", error));
   }
 };
