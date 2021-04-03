@@ -1,0 +1,28 @@
+.fade-anim {
+  position: relative;
+  -webkit-animation: fadeAn 0.2s reverse; /* Chrome, Safari, Opera */
+  -webkit-animation-delay: none; /* Chrome, Safari, Opera */
+  animation: fadeAn 0.2s reverse;
+  animation-delay: none;
+}
+
+@keyframes fadeAn {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+.isDragging {
+  opacity: 0;
+  position: absolute;
+}
+
+.list-group-item {
+  cursor: grab;
+}
+.list-group-item:active {
+  cursor: grabbing;
+}
