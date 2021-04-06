@@ -68,9 +68,9 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
         completed: true,
       }));
 
-      // setTimeout(() => {
-      //   removeFile();
-      // }, 4000);
+      setTimeout(() => {
+        removeFile();
+      }, 4000);
     });
   }, []);
 
