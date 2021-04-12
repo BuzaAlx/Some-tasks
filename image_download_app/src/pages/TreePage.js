@@ -9,7 +9,7 @@ const TreeList = () => {
         <div className="col text-center">
           <p>
             <div className="row mt-3 d-flex pl-10">
-              <div className="col-lg-8 text-left text-light border-left">
+              <div className="col-lg-8 text-left text-light border-left tree">
                 <Tree data={treeData} />
               </div>
             </div>
